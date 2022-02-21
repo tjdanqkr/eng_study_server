@@ -1,13 +1,13 @@
 import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { TokenDto } from './dto/token.dto';
-
 import { User, UserDocument } from './schemas/user.schema';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { SigninAuthDto } from './dto/signin-auth.dto';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -33,10 +33,10 @@ export class AuthService {
     const user = await this.userModel.findOne({ id });
     if (user && (await bcrypt.compare(password, user.password))) {
       // 토큰 생성
-      const payload = { id };
+
+      const payload = { id, isAdmin: user.isAdmin };
 
       const accessToken = await this.jwtServise.sign(payload);
-      console.log(this.jwtServise.verify(accessToken));
       return { accessToken };
     } else {
       throw new UnauthorizedException('Login fail');

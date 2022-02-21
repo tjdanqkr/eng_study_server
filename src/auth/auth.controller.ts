@@ -15,6 +15,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { SigninAuthDto } from './dto/signin-auth.dto';
+import { AdminAuthGuard } from './gaurds/admin-auth.gaurd';
 import { JwtAuthGuard } from './gaurds/jwt-auth.gaurd';
 
 @Controller('auth')
@@ -35,6 +36,12 @@ export class AuthController {
   @Post('/tests')
   @UseGuards(JwtAuthGuard)
   test(@Req() req) {
+    console.log(req);
+  }
+
+  @Post('/admintests')
+  @UseGuards(AdminAuthGuard)
+  admintest(@Req() req) {
     console.log(req);
   }
 

@@ -6,22 +6,22 @@ import { User, UserDocument } from '../schemas/user.schema';
 import { Model } from 'mongoose';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
+export class AdminStrategy extends PassportStrategy(Strategy, 'admin') {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {
     super({
       secretOrKey: process.env.JWT_SECRET,
       // secretOrKey: 'a',
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     });
-    console.log();
   }
 
   async validate(payload) {
-    Logger.log('start');
     const { id } = payload;
     const user: User = await this.userModel.findOne({ id });
     if (!user) {
       throw new UnauthorizedException();
+    } else if (!user.isAdmin) {
+      throw new UnauthorizedException('Not Admin!!');
     }
     return user;
   }

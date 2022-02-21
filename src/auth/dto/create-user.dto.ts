@@ -1,17 +1,46 @@
+import {
+  IsBooleanString,
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
+
 export class CreateUserDto {
-  id: string;
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(2)
+  @MaxLength(20)
+  readonly id: string;
 
-  password: string;
+  @IsString()
+  @IsNotEmpty()
+  @Matches(/^[A-Za-z\d!@#$%^&*()]{8,30}$/)
+  readonly password: string;
 
-  name: string;
+  @IsString()
+  @IsNotEmpty()
+  readonly name: string;
 
-  phoneNum: number;
+  @IsNotEmpty()
+  readonly phoneNum: number;
 
-  bigCategory: number;
+  @IsNotEmpty()
+  readonly bigCategory: number;
 
-  middleCategory: number;
+  @IsNotEmpty()
+  readonly middleCategory: number;
 
-  startTime: Date;
+  @IsNotEmpty()
+  readonly startTime: Date;
 
-  endTime: Date;
+  @IsNotEmpty()
+  readonly endTime: Date;
+
+  @IsNotEmpty()
+  @IsBooleanString()
+  readonly isAdmin: boolean;
 }

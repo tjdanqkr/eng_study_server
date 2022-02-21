@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './auth/auth.module';
+import { QuestionModule } from './question/question.module';
+import { CategoryModule } from './category/category.module';
 import * as path from 'path';
 
 @Module({
@@ -19,6 +21,10 @@ import * as path from 'path';
     }),
 
     AuthModule,
+
+    QuestionModule,
+
+    CategoryModule,
   ],
   controllers: [],
   providers: [],
