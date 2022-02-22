@@ -5,8 +5,6 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Category, CategoryDocument } from './schemas/category.schema';
 import { Model } from 'mongoose';
 
-import { AdminAuthGuard } from 'src/auth/gaurds/admin-auth.gaurd';
-
 @Injectable()
 export class CategoryService {
   constructor(
@@ -16,7 +14,6 @@ export class CategoryService {
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     const num = (await this.findAll()).length;
     const category = new this.categoryModel({ ...createCategoryDto, num });
-    Logger.verbose(category);
     return await category.save();
   }
 
@@ -33,10 +30,20 @@ export class CategoryService {
   }
 
   async update(num: number, updateCategoryDto: UpdateCategoryDto) {
-    return await this.categoryModel.updateOne({ num }, updateCategoryDto);
+    return await this.categoryModel.updateOne(
+      { num },
+      updateCategoryDto,
+      function (err, doc) {
+        if (err) return { error: err };
+        return 'Succesfully saved.';
+      },
+    );
   }
 
   async remove(num: number) {
-    return await this.categoryModel.deleteOne({ num });
+    return await this.categoryModel.deleteOne({ num }, {}, (err) => {
+      if (err) return err;
+      return;
+    });
   }
 }

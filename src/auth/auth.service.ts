@@ -43,10 +43,6 @@ export class AuthService {
     }
   }
 
-  async test(token: TokenDto): Promise<TokenDto> {
-    return;
-  }
-
   async findAll(): Promise<User[]> {
     return this.userModel.find();
   }
@@ -54,9 +50,5 @@ export class AuthService {
   async findOne(id: string) {
     const user: User = await this.userModel.findOne({ id });
     return user;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
   }
 }
