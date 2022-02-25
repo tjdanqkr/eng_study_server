@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './auth/auth.module';
@@ -14,7 +14,18 @@ import * as path from 'path';
       isGlobal: true,
       cache: true,
     }),
-    MongooseModule.forRoot(process.env.DATABASE_URL),
+    MongooseModule.forRoot(process.env.DATABASE_URL_FULL, { retryDelay: 100 }),
+    // MongooseModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: async (configService: ConfigService) => ({
+    //     uri: configService.get<'string'>('DATABASE_URL_INDEX'),
+    //     retryDelay: 100,
+    //     // user: process.env.DATABASE_USERNAME,
+    //     // pass: process.env.DATABASE_PASSWORD,
+    //   }),
+    //   inject: [ConfigService],
+    // }),
+
     ThrottlerModule.forRoot({
       ttl: 60,
       limit: 10,

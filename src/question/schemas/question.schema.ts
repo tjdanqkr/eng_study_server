@@ -2,13 +2,13 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema()
 export class Question {
-  @Prop({ unique: true })
+  @Prop({ unique: true, type: 'number' })
   num: number;
 
   @Prop()
   title: string;
 
-  @Prop({})
+  @Prop({ type: Object })
   question: Problem;
 
   @Prop()
