@@ -4,6 +4,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsString,
+  Length,
   Matches,
   MaxLength,
   MinLength,
@@ -26,6 +27,7 @@ export class CreateUserDto {
   readonly name: string;
 
   @IsNotEmpty()
+  @Length(10, 11)
   readonly phoneNum: number;
 
   @IsNotEmpty()

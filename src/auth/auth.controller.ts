@@ -43,7 +43,7 @@ export class AuthController {
   // }
 
   @Get()
-  @UseGuards(AdminAuthGuard)
+  // @UseGuards(AdminAuthGuard)
   findAll(): Promise<User[]> {
     return this.authService.findAll();
   }
