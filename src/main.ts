@@ -9,6 +9,6 @@ async function bootstrap() {
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
   app.useLogger(app.get(WINSTON_MODULE_PROVIDER));
-  await app.listen(3001);
+  await app.listen(process.env.PORT||3000);
 }
 bootstrap();
