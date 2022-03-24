@@ -6,12 +6,14 @@ import {
   Param,
   Delete,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { SigninAuthDto } from './dto/signin-auth.dto';
 import { TokenDto } from './dto/token.dto';
 import { AdminAuthGuard } from './gaurds/admin-auth.gaurd';
+import { JwtAuthGuard } from './gaurds/jwt-auth.gaurd';
 
 import { User } from './schemas/user.schema';
 
@@ -30,12 +32,17 @@ export class AuthController {
     return this.authService.signin(signinAuthDto);
   }
 
-  // @Post('/tests')
-  // @UseGuards(JwtAuthGuard)
-  // test(@Req() req) {
-  //   console.log(req);
-  // }
+  @Get('/me')
+  @UseGuards(JwtAuthGuard)
+  me(@Req() req) {
+    return;
+  }
 
+  @Get('/adminme')
+  @UseGuards(AdminAuthGuard)
+  adminMe(@Req() req) {
+    return;
+  }
   // @Post('/admintests')
   // @UseGuards(AdminAuthGuard)
   // admintest(@Req() req) {

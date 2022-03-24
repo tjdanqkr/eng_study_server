@@ -5,13 +5,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './auth/auth.module';
 import { QuestionModule } from './question/question.module';
 import { CategoryModule } from './category/category.module';
-
 import * as path from 'path';
-import {
-  WinstonModule,
-  utilities as nestWinstonModuleUtilities,
-} from 'nest-winston';
-import * as winston from 'winston';
 
 @Module({
   imports: [
@@ -32,20 +26,6 @@ import * as winston from 'winston';
     QuestionModule,
 
     CategoryModule,
-    WinstonModule.forRoot({
-      transports: [
-        new winston.transports.Console({
-          level: 'silly',
-          // process.env.NODE_ENV === 'production' ? 'info' : 'silly',
-          format: winston.format.combine(
-            winston.format.timestamp(),
-            nestWinstonModuleUtilities.format.nestLike('MyApp', {
-              prettyPrint: true,
-            }),
-          ),
-        }),
-      ],
-    }),
   ],
   controllers: [],
   providers: [Logger],
